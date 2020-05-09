@@ -1,6 +1,5 @@
 import numpy as np
 from interface import implements, Interface
-from Utils import RunningAverage
 
 #──────────────────────────────────────────────────────────────────────────────
 #                                   Environment
@@ -65,8 +64,7 @@ class ActionValuesProvider(implements(IActionValuesProvider)):
         self._action_values[action].addValue(new_value)
 
     def __get_initial_action_value(self, action):
-        value = self.__action_value_initializer.initialize_action(action, self.__action_count)
-        return RunningAverage(value)
+        return self.__action_value_initializer.initialize_action(action, self.__action_count)
 
 #──────────────────────────────────────────────────────────────────────────────
 #                                     Agent

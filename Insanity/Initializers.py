@@ -1,10 +1,14 @@
 from interface import implements, Interface
-import Insanity.Core as rl
+from Insanity.Core import IActionValueInitializer
+from Insanity.Utils import RunningAverage
 
-class ZeroActionInitializer(implements(rl.IActionValueInitializer)):
+class ZeroInitializer(implements(IActionValueInitializer)):
     def initialize_action(self, action, action_count):
-        return 0
+        return RunningAverage()
 
-class OptimisticActionInitialized(implements(rl.IActionValueInitializer)):
+class OptimisticInitializer(implements(IActionValueInitializer)):
+    def __init__(self, initial_value):
+        self.__initial_value = initial_value
+
     def initialize_action(self, action, action_count):
-        return 2
+        return RunningAverage(self.__initial_value, 0.1)

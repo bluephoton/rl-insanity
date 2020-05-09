@@ -1,12 +1,12 @@
 from BanditEnvironment import BanditEnvironment
 from BanditAgent import BanditAgent
 from Insanity.Selectors import EpsilonGreedyActionSelector
-from Insanity.Initializers import ZeroActionInitializer
+from Insanity.Initializers import OptimisticInitializer
 from Insanity.Utils import RunningAverage
 import numpy as np
 
 class Experiment:
-    def __init__(self, ε, num_arms):
+    def __init__(self, ε, num_arms, action_value_initializer):
         # Crearte and setup environment
         self.__num_arms = num_arms
         self.__env = BanditEnvironment(num_arms)
@@ -22,7 +22,6 @@ class Experiment:
         self.__optimality = []
 
         # Create agent
-        action_value_initializer = ZeroActionInitializer()
         action_selector = EpsilonGreedyActionSelector(ε, action_count)
         self.__agent = BanditAgent(action_count, action_value_initializer, action_selector)
 
