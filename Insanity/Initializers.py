@@ -7,8 +7,9 @@ class ZeroInitializer(implements(IActionValueInitializer)):
         return RunningAverage()
 
 class OptimisticInitializer(implements(IActionValueInitializer)):
-    def __init__(self, initial_value):
+    def __init__(self, initial_value, α):
         self.__initial_value = initial_value
+        self.__α = α
 
     def initialize_action(self, action, action_count):
-        return RunningAverage(self.__initial_value, 0.1)
+        return RunningAverage(self.__initial_value, self.__α)

@@ -27,7 +27,7 @@ def run_experiment(num_runs, num_pulls_per_run, εs, initializers):
 
 # Run our experiment
 εs = [0, 0.1]
-initializers = [OptimisticInitializer(5), ZeroInitializer()]
+initializers = [OptimisticInitializer(5, 0.1), ZeroInitializer()]
 num_runs = 2000
 num_pulls_per_run = 1000
 before = t.perf_counter()
