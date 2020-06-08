@@ -1,8 +1,8 @@
 import numpy as np
 from interface import implements, Interface
-import Insanity.Core as rl
+from Insanity.Core import IActionSelector
 
-class EpsilonGreedyActionSelector(implements(rl.IActionSelector)):
+class EpsilonGreedyActionSelector(implements(IActionSelector)):
     def __init__(self, ε, action_count):
         self.ε = ε
         self.__step = 0
@@ -28,3 +28,21 @@ class EpsilonGreedyActionSelector(implements(rl.IActionSelector)):
         # https://stackoverflow.com/questions/42071597/numpy-argmax-random-tie-breaking
         values = action_values_provider.action_values
         return np.random.choice(np.flatnonzero(np.isclose(values, values.max())))
+
+class UCBActionSelector(implements(IActionSelector)):
+    def __init__(self):
+        self.__step = 0
+
+    def select_action(self, action_values_provider):
+        exploit, explore = action_values_provider.action_values
+        values = exploit + explore
+        return np.random.choice(np.flatnonzero(np.isclose(values, values.max())))
+
+class GradientSelector(implements(IActionSelector)):
+    def __init__(self):
+        self.__step = 0
+
+    def select_action(self, action_values_provider):
+        values = action_values_provider.action_values
+        # Book is not explicit on this, but we need to sample from this probability mass function (discrete)
+        return np.random.choice(len(values), p=values)

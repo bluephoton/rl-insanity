@@ -3,8 +3,8 @@ from BanditMachine import BanditMachine
 from Insanity.Core import IEnvironment
 
 class BanditEnvironment(implements(IEnvironment)):
-    def __init__(self, num_arms):
-        self.__bandit = BanditMachine(num_arms)
+    def __init__(self, num_arms, µ, σ):
+        self.__bandit = BanditMachine(num_arms, µ, σ)
         self.__update_handler = None
 
     def setup(self):

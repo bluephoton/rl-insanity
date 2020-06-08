@@ -1,11 +1,12 @@
 from interface import implements, Interface
 from Insanity.Core import Agent
 from Insanity.Utils import RunningAverage
+from ActionValuesProvider import ActionValuesProvider
 import numpy as np
 
 class BanditAgent(Agent):
-    def __init__(self, action_count, action_value_initializer, action_selector):
-        Agent.__init__(self, action_count, action_value_initializer)
+    def __init__(self, action_count, action_values_provider, action_selector):
+        Agent.__init__(self, action_count, action_values_provider)
         self.__action_count = action_count
         self.__action_selector = action_selector
         self.__recent_action = None

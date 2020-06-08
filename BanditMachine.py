@@ -10,9 +10,9 @@ class Arm:
         return reward
 
 class BanditMachine:
-    def __init__(self, number_of_arms):
+    def __init__(self, number_of_arms, µ, σ):
         # We use random sampled from N(0,1) distribution to initialize q* for our simulation
-        self.__arms = [Arm(np.random.normal(0, 1), 1) for _ in range(number_of_arms)]
+        self.__arms = [Arm(np.random.normal(µ, σ), 1) for _ in range(number_of_arms)]
         # cache the index of arm with maximum expected reward
         arm_values = [a.reward_µ for a in self.__arms]
         self.__optimum_arm = np.argmax(arm_values)

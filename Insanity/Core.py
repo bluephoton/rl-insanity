@@ -46,26 +46,6 @@ class IActionValuesProvider(Interface):
     def update_action_value(self, action, new_value):
         pass
 
-class ActionValuesProvider(implements(IActionValuesProvider)):
-    def __init__(self, action_count, action_value_initializer):
-        self.__action_count = action_count
-        self.__action_value_initializer = action_value_initializer
-        self._action_values = np.array([ self.__get_initial_action_value(i) for i in range(action_count)])
-
-    @property
-    def action_count(self):
-        return self.__action_count
-
-    @property
-    def action_values(self):
-        return np.array([av.value for av in self._action_values])
-
-    def update_action_value(self, action, new_value):
-        self._action_values[action].addValue(new_value)
-
-    def __get_initial_action_value(self, action):
-        return self.__action_value_initializer.initialize_action(action, self.__action_count)
-
 #──────────────────────────────────────────────────────────────────────────────
 #                                     Agent
 #──────────────────────────────────────────────────────────────────────────────
@@ -78,8 +58,8 @@ class IAgent(Interface):
         pass
 
 class Agent(implements(IAgent)):
-    def __init__(self, action_count, action_value_initializer):
-        self._action_value_provider = ActionValuesProvider(action_count, action_value_initializer)
+    def __init__(self, action_count, action_values_provider):
+        self._action_value_provider = action_values_provider
 
     def step(self):
         pass
